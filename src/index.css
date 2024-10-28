@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+
+body{
+  margin:0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main{
+  height: 80vh; 
+  width: 90vw;
+  min-height: 500px;
+  min-width: 500px;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  border: 5px solid black;
+  gap:50px; 
+}
+
+div{
+  border: 1px solid black;
+  padding: 15px; 
+}
+
+img{
+  margin-bottom: 10px; 
+}
