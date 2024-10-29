@@ -3,7 +3,7 @@ import { logFoodData } from "../services/airTableService";
 
 const FoodDetails = ({ foodData, clearFoodDataState }) => {
     const [message, setMessage] = useState("");  // Define state for message
-    console.log("Food data:", foodData);
+    console.log("FoodDetails.jsx: Food data:", foodData);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +34,7 @@ const FoodDetails = ({ foodData, clearFoodDataState }) => {
                 <p>Fats per 100g: {foodData.productFats}g</p>
                 <button type="submit">Add</button>
             </form>
+            
         </>
     );
 };

@@ -1,0 +1,9 @@
+const newSearchResults = {
+    productName: data.product.product_name,
+    productKcal: data.product.nutriments.energy,
+    productCarbs: data.product.nutriments.carbohydrates,
+    productSugars: data.product.nutriments.sugars,
+    productProteins: data.product.nutriments.proteins,
+    productFats: data.product.nutriments.fat,
+    productImage: data.product.selected_images.front.small.en,
+};

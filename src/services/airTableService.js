@@ -51,6 +51,14 @@ const logFoodData = async (foodData) => {
             },
             body: JSON.stringify(data),
         });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                `Error ${response.status}: ${
+                    errorData.error.message || response.statusText
+                }`
+            );
+        }
         const result = await response.json();
         console.log("Record saved:", result);
     } catch (error) {
@@ -60,7 +68,7 @@ const logFoodData = async (foodData) => {
 
 // logFoodData(foodData);
 // fetchFoodLog();
-fetchFoodLog();
+// fetchFoodLog();
 
 export { logFoodData, fetchFoodLog };
 
