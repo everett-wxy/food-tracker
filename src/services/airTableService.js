@@ -67,10 +67,32 @@ const logFoodData = async (foodData) => {
     }
 };
 
+const deleteFoodItem = async (recordId) => {
+    try {
+        const deleteUrl = `${url}/${recordId}`; // Append recordId to the base URL
+        const response = await fetch(deleteUrl, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                `Error ${response.status}: ${
+                    errorData.error.message || response.statusText
+                }`
+            );
+        }
+        
+        console.log("Record deleted successfully:", recordId);
+    } catch (error) {
+        console.log("Error deleting record:", error.message);
+    }
+};
+
 // logFoodData(foodData);
 // fetchFoodLog();
-// fetchFoodLog();
 
-export { logFoodData, fetchFoodLog };
-
-// { headers: {authorization: "Bearer" + import.meta.env.VITE_TOKEN}}
+export { logFoodData, fetchFoodLog, deleteFoodItem };

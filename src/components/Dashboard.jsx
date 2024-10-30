@@ -1,48 +1,47 @@
-import React, { useState } from "react";
-import FoodSearch from "./foodsearch/FoodSearch";
-import { getFoodDataBySearchQueries } from "../services/foodSearch";
-// import FoodDetails from "./FoodDetails";
+import React, { useEffect, useState } from "react";
 import AddFoodModal from "./addFoodModal/AddFoodModal";
+import FoodLog from "./foodLog/FoodLog";
+import { fetchFoodLog } from "../services/airTableService";
 
 const Dashboard = () => {
-    // const [searchResults, setSearchResults] = useState([]);
     const [modal, setModal] = useState(false);
+
+    const [foodLog, setFoodLog] = useState([]);
+
+    const getFoodLog = async () => {
+        try {
+            const data = await fetchFoodLog();
+            setFoodLog(data);
+        } catch (error) {
+            console.log("error:", error.messsage);
+        }
+    };
+
+    useEffect(() => {
+        console.log("foodlog:", foodLog);
+        getFoodLog();
+    }, []);
 
     const toggleModal = () => {
         setModal(!modal);
     };
 
-    // const getSearchResults = async (category) => {
-    //     try {
-    //         const data = await getFoodDataBySearchQueries(category);
-    //         const newSearchResults = data.products;
-    //         console.log("This is the search results:", newSearchResults);
-    //         setSearchResults(newSearchResults);
-    //     } catch (error) {
-    //         console.log("Error:", error.message);
-    //     }
-    // };
-
     return (
         <>
-            <button onClick={toggleModal}>Add Food</button>
+            <FoodLog fetchedFoodLog={foodLog} toggleModal={toggleModal} getFoodLog={getFoodLog}/>
             {modal && (
                 <div className="modal">
                     <div onClick={toggleModal} className="overlay"></div>
                     <div className="modal-content">
                         <div>
-                            {/* <FoodSearch getSearchResults={getSearchResults} /> */}
-                            {/* <AddFoodModal searchResults={searchResults} /> */}
-                            <AddFoodModal toggleModal={toggleModal}/>
-                            <button onClick={toggleModal}>Close</button>
+                            <AddFoodModal toggleModal={toggleModal} getFoodLog={getFoodLog}/>
                         </div>
                     </div>
                 </div>
             )}
+
         </>
     );
 };
 
 export default Dashboard;
-
-// <FoodDetails foodData={foodData} clearFoodDataState={clearFoodDataState}/>

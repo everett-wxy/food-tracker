@@ -26,6 +26,4 @@ const getFoodDataBySearchQueries = async (searchQueryCategoriesValue) => {
     }
 };
 
-getFoodDataBySearchQueries("chocolate");
-
 export { getFoodDataBySearchQueries };

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { logFoodData } from "../../services/airTableService";
 import { getFoodDataBySearchQueries } from "../../services/foodSearch";
-import FoodSearch from "../foodsearch/FoodSearch";
+import { fetchFoodLog } from "../../services/airTableService";
+import FoodSearch from "./foodSearch/FoodSearch";
 import "./addFoodModal.css";
 
-const AddFoodModal = ({ toggleModal }) => {
+const AddFoodModal = ({ toggleModal, getFoodLog}) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const getSearchResults = async (category) => {
@@ -87,6 +88,7 @@ const AddFoodModal = ({ toggleModal }) => {
             console.log("Food data before loggin - searchResult", selectedResultWithServingSize);
             await logFoodData(selectedResultWithServingSize);
             toggleModal();
+            getFoodLog();
         } catch (error) {
             console.log("error logging data", error.message);
         }

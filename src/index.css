@@ -7,6 +7,19 @@ body{
   align-items: center;
 }
 
+.food-log-container{
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  border: 1px solid black; 
+  padding: 40px; 
+  gap: 10px;
+}
+
+.food-item-container{
+  padding: 10px; 
+  border: 1px solid black; 
+}
 .modal, .overlay {
   width: 100vw;
   height: 100vh;
@@ -29,22 +42,4 @@ body{
 
 .overlay {
   background: rgba(49,49,49,0.8);
-}
-
-.results-panel{
-  height:400px;
-  overflow-y: scroll;
-  border: 1px solid black;
-}
-
-.result {
-  border: 1px black solid;
-  margin: 5px;
-  padding: 10px;
-}
-
-.food-details{
-  border: 3px black solid;
-  margin-top: 5px; 
-  padding: 10px; 
 }
