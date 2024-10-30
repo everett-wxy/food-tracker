@@ -34,11 +34,12 @@ const logFoodData = async (foodData) => {
     const data = {
         fields: {
             FoodName: foodData.productName,
-            Kcal: foodData.productKcal,
-            Carbs: foodData.productCarbs,
-            Proteins: foodData.productProteins,
-            Fats: foodData.productFats,
-            ImageURL: foodData.productImage,
+            KcalPerGram: foodData.productKcal,
+            CarbsPerGram: foodData.productCarbs,
+            SugarsPerGram: foodData.productSugars,
+            ProteinsPerGram: foodData.productProteins,
+            FatsPerGram: foodData.productFats,
+            LoggedServingSize : Number(foodData.loggedServingSize)
         },
     };
 

@@ -44,11 +44,11 @@ const Result = ({ searchResults }) => {
     const updateNutritionalValueBasedOnServing = (servingSize) => {
         const newNutritionalValue = {
             ...selectedResult,
-            productKcal: (selectedResult.productKcal * servingSize).toFixed(2),
-            productCarbs: (selectedResult.productCarbs * servingSize).toFixed(2),
-            productProteins: (selectedResult.productProteins * servingSize).toFixed(2),
-            productSugars: (selectedResult.productSugars * servingSize).toFixed(2),
-            productFats: (selectedResult.productFats * servingSize).toFixed(2),
+            productKcal: (selectedResult.productKcal * servingSize).toFixed(0),
+            productCarbs: (selectedResult.productCarbs * servingSize).toFixed(1),
+            productProteins: (selectedResult.productProteins * servingSize).toFixed(1),
+            productSugars: (selectedResult.productSugars * servingSize).toFixed(1),
+            productFats: (selectedResult.productFats * servingSize).toFixed(1),
         };
         setSelectedResultAdjustedServings(newNutritionalValue);
         console.log(
@@ -58,10 +58,14 @@ const Result = ({ searchResults }) => {
     };
 
     const handleAddFood = async () => {
-        if (!selectedResult) return;
+        if (!selectedResultAdjustedServings || !servingSize) return;
+        const selectedResultWithServingSize = {
+            ...selectedResult, 
+            loggedServingSize : servingSize,
+        }
         try {
-            console.log("Food data before loggin", selectedResult);
-            // await logFoodData(selectedResult);
+            console.log("Food data before loggin - searchResult", selectedResultWithServingSize);
+            await logFoodData(selectedResultWithServingSize);
         } catch (error) {
             console.log("error logging data", error.message);
         }
@@ -136,5 +140,3 @@ const Result = ({ searchResults }) => {
 };
 
 export default Result;
-
-// selectedResultAdjustedServings?.productKcal !== undefined ? selectedResultAdjustedServings.productKcal : selectedResult?.productKcal !== undefined ? selectedResult.productKcal : "N/A"
