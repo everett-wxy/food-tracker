@@ -11,7 +11,7 @@ const Dashboard = () => {
         try {
             const data = await getFoodDataBySearchQueries(category);
             const newSearchResults = data.products;
-            console.log("searchResults:", newSearchResults);
+            console.log("This is the search results:", newSearchResults);
             setSearchResults(newSearchResults);
         } catch (error) {
             console.log("Error:", error.message);

@@ -1,6 +1,6 @@
 const baseUrlSearchQueries = "https://world.openfoodfacts.net/api/v2/search?";
 const searchQueriesResponseFields =
-    "fields=product_name,code,selected_images,nutriments,serving_size";
+    "fields=product_name,code,selected_images,nutriments";
 const searchQeuriesParameters = "&states_tags=complete&sort_by=popularity_key&page_size=20";
 const searchQueryCategories = `&categories_tags=`;
 

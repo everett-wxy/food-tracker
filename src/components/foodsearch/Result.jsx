@@ -2,81 +2,139 @@ import React, { useState } from "react";
 import { logFoodData } from "../../services/airTableService";
 
 const Result = ({ searchResults }) => {
+    // restructuredSearchResultsData 1) extracts the necessary data from response object and 2) recompute the nutritional value to 1 gram
+    const restructuredSearchResultsData = searchResults.map((item) => ({
+        productCode: item.code,
+        productName: item.product_name,
+        productKcal: item.nutriments["energy-kcal"] / 100,
+        productCarbs: item.nutriments.carbohydrates / 100,
+        productSugars: item.nutriments.sugars / 100,
+        productProteins: item.nutriments.proteins / 100,
+        productFats: item.nutriments.fat / 100,
+        productImage: item.selected_images.front.small.en,
+    }));
+
+    const searchResultsPanel = restructuredSearchResultsData.map(
+        (searchResult) => (
+            <div
+                className="result"
+                onClick={() => handleClick(searchResult)}
+                key={searchResult.productCode}
+            >
+                {searchResult.productName}
+            </div>
+        )
+    );
+
     const [selectedResult, setSelectedResults] = useState({});
+    const [servingSize, setServingSize] = useState(1);
+    const [selectedResultAdjustedServings, setSelectedResultAdjustedServings] =
+        useState({});
 
     const handleClick = (searchResult) => {
         setSelectedResults(searchResult);
+        console.log("this is the selected food product", selectedResult);
+    };
+
+    const handleServingSizeInput = (e) => {
+        setServingSize(e.target.value);
+        updateNutritionalValueBasedOnServing(e.target.value); // passing down the serving size value directly
+    };
+
+    const updateNutritionalValueBasedOnServing = (servingSize) => {
+        const newNutritionalValue = {
+            ...selectedResult,
+            productKcal: (selectedResult.productKcal * servingSize).toFixed(2),
+            productCarbs: (selectedResult.productCarbs * servingSize).toFixed(2),
+            productProteins: (selectedResult.productProteins * servingSize).toFixed(2),
+            productSugars: (selectedResult.productSugars * servingSize).toFixed(2),
+            productFats: (selectedResult.productFats * servingSize).toFixed(2),
+        };
+        setSelectedResultAdjustedServings(newNutritionalValue);
+        console.log(
+            "updated nutritional value based on serving size:",
+            newNutritionalValue
+        );
     };
 
     const handleAddFood = async () => {
         if (!selectedResult) return;
-
-        const foodDataToBeLogged = {
-            productName: selectedResult.product_name,
-            productKcal: selectedResult.nutriments.energy,
-            productCarbs: selectedResult.nutriments.carbohydrates,
-            productSugars: selectedResult.nutriments.sugars,
-            productProteins: selectedResult.nutriments.proteins,
-            productFats: selectedResult.nutriments.fat,
-            productImage: selectedResult.selected_images.front.small.en,
-        };
-
         try {
-            console.log("Food data before loggin", foodDataToBeLogged);
-            await logFoodData(foodDataToBeLogged);
+            console.log("Food data before loggin", selectedResult);
+            // await logFoodData(selectedResult);
         } catch (error) {
             console.log("error logging data", error.message);
         }
     };
 
-    const searchResultsPanel = searchResults.map((searchResult) => (
-        <div
-            className="result"
-            onClick={() => handleClick(searchResult)}
-            key={searchResult.code}
-        >
-            {searchResult.product_name}
-        </div>
-    ));
-
     return (
         <>
             <div className="results-panel">{searchResultsPanel}</div>
+
             <div className="food-details">
-                {selectedResult.selected_images?.front?.small?.en && (
+                {selectedResult.productImage && (
                     <img
-                        src={selectedResult.selected_images.front.small.en}
+                        src={selectedResult.productImage}
                         alt="Product Image"
                     />
                 )}
-                <p>{selectedResult.product_name}</p>
-                <p>Serving size: {selectedResult?.serving_size || "N/A"}</p>
+                <p>{selectedResult.productName}</p>
                 <p>
                     Kcal:{" "}
-                    {selectedResult.nutriments?.["energy-kcal_serving"] ||
-                        "N/A"}{" "}
+                    {selectedResultAdjustedServings?.productKcal !== undefined
+                        ? selectedResultAdjustedServings.productKcal
+                        : selectedResult?.productKcal !== undefined
+                        ? selectedResult.productKcal
+                        : "N/A"}
                 </p>
                 <p>
                     Carbs:{" "}
-                    {selectedResult.nutriments?.["carbohydrates_serving"] ||
-                        "N/A"}
+                    {selectedResultAdjustedServings?.productCarbs !== undefined
+                        ? selectedResultAdjustedServings.productCarbs
+                        : selectedResult?.productCarbs !== undefined
+                        ? selectedResult.productCarbs
+                        : "N/A"}
                 </p>
                 <p>
                     Sugars:{" "}
-                    {selectedResult.nutriments?.["sugars_serving"] || "N/A"}
+                    {selectedResultAdjustedServings?.productSugars !== undefined
+                        ? selectedResultAdjustedServings.productSugars
+                        : selectedResult?.productSugars !== undefined
+                        ? selectedResult.productSugars
+                        : "N/A"}
                 </p>
                 <p>
                     Proteins:{" "}
-                    {selectedResult.nutriments?.["proteins_serving"] || "N/A"}
+                    {selectedResultAdjustedServings?.productProteins !==
+                    undefined
+                        ? selectedResultAdjustedServings.productProteins
+                        : selectedResult?.productProteins !== undefined
+                        ? selectedResult.productProteins
+                        : "N/A"}
                 </p>
                 <p>
-                    Fat: {selectedResult.nutriments?.["fat_serving"] || "N/A"}
+                    Fat:{" "}
+                    {selectedResultAdjustedServings?.productFats !== undefined
+                        ? selectedResultAdjustedServings.productFats
+                        : selectedResult?.productFats !== undefined
+                        ? selectedResult.productFats
+                        : "N/A"}
                 </p>
+                <label htmlFor="servingSize">Serving in grams: </label>
+                <input
+                    name="servingSize"
+                    id="servingSize"
+                    type="number"
+                    value={servingSize}
+                    onChange={handleServingSizeInput}
+                ></input>
+                <br />
                 <button onClick={handleAddFood}>Add Food</button>
             </div>
-            <div></div>
         </>
     );
 };
 
 export default Result;
+
+// selectedResultAdjustedServings?.productKcal !== undefined ? selectedResultAdjustedServings.productKcal : selectedResult?.productKcal !== undefined ? selectedResult.productKcal : "N/A"
