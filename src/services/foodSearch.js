@@ -26,34 +26,6 @@ const getFoodDataBySearchQueries = async (searchQueryCategoriesValue) => {
     }
 };
 
-// getFoodDataBySearchQueries("chocolate");
+getFoodDataBySearchQueries("chocolate");
 
 export { getFoodDataBySearchQueries };
-
-// const baseUrlBarcode = "https://world.openfoodfacts.net/api/v2/product/";
-// const barCodeResponseFields = "?fields=product_name,nutriments,selected_images";
-
-// const getFoodDataByBarcode = async (productBarcode) => {
-//     try {
-//         const res = await fetch(
-//             `${baseUrlBarcode}${productBarcode}${barCodeResponseFields}`
-//         );
-//         if (!res.ok) {
-//             const errorData = await res.json();
-//             throw new Error(
-//                 `Error ${res.status}: ${
-//                     errorData.error.message || response.statusText
-//                 }`
-//             );
-//         }
-//         const data = await res.json();
-//         console.log("getFoodDataByBarcode:", data);
-//         return data;
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };
-
-// getFoodDataByBarcode(3017624010701);
-
-// export { getFoodDataByBarCode };

@@ -1,0 +1,17 @@
+.results-panel{
+    height:400px;
+    overflow-y: scroll;
+    border: 1px solid black;
+  }
+  
+  .result {
+    border: 1px black solid;
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  .food-details{
+    border: 3px black solid;
+    margin-top: 5px; 
+    padding: 10px; 
+  }

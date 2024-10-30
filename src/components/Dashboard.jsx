@@ -1,31 +1,45 @@
 import React, { useState } from "react";
 import FoodSearch from "./foodsearch/FoodSearch";
 import { getFoodDataBySearchQueries } from "../services/foodSearch";
-import FoodDetails from "./FoodDetails";
-import Result from "./foodsearch/Result";
+// import FoodDetails from "./FoodDetails";
+import AddFoodModal from "./addFoodModal/AddFoodModal";
 
 const Dashboard = () => {
-    const [searchResults, setSearchResults] = useState([]);
+    // const [searchResults, setSearchResults] = useState([]);
+    const [modal, setModal] = useState(false);
 
-    const getSearchResults = async (category) => {
-        try {
-            const data = await getFoodDataBySearchQueries(category);
-            const newSearchResults = data.products;
-            console.log("This is the search results:", newSearchResults);
-            setSearchResults(newSearchResults);
-        } catch (error) {
-            console.log("Error:", error.message);
-        }
+    const toggleModal = () => {
+        setModal(!modal);
     };
 
+    // const getSearchResults = async (category) => {
+    //     try {
+    //         const data = await getFoodDataBySearchQueries(category);
+    //         const newSearchResults = data.products;
+    //         console.log("This is the search results:", newSearchResults);
+    //         setSearchResults(newSearchResults);
+    //     } catch (error) {
+    //         console.log("Error:", error.message);
+    //     }
+    // };
+
     return (
-        <div className="main">
-            <div>
-                <FoodSearch getSearchResults={getSearchResults} />
-                <h2>Search Results</h2>
-                <Result searchResults={searchResults} />
-            </div>
-        </div>
+        <>
+            <button onClick={toggleModal}>Add Food</button>
+            {modal && (
+                <div className="modal">
+                    <div onClick={toggleModal} className="overlay"></div>
+                    <div className="modal-content">
+                        <div>
+                            {/* <FoodSearch getSearchResults={getSearchResults} /> */}
+                            {/* <AddFoodModal searchResults={searchResults} /> */}
+                            <AddFoodModal toggleModal={toggleModal}/>
+                            <button onClick={toggleModal}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 

@@ -29,19 +29,3 @@ const FoodSearch = ({ getSearchResults }) => {
 };
 
 export default FoodSearch;
-
-/*
-form for search by barcode 
-<form className={style.foodSearchInput} onSubmit={handleSubmit}>
-<label htmlFor="food-search">Search your food:</label>
-<input
-    id="food-search"
-    name="food-search"
-    type="text"
-    placeholder="Insert food product barcode"
-    value={barcode}
-    onChange={(e) => setBarcode(e.target.value)}
-></input>
-<button type="submit">search</button>
-</form>
-*/
