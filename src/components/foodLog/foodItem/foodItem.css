@@ -1,0 +1,17 @@
+.serving-size-container span {
+    cursor: pointer; /* Changes the cursor to a pointer */
+    color: #007BFF; /* Change the text color */
+    text-decoration: underline; /* Adds an underline */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.serving-size-container span:hover {
+    color: #0056b3; /* Darken the text color on hover */
+}
+.delete-btn{
+    margin-top: 20px;
+}
+
+h2{
+    margin: 10px 0px;
+}

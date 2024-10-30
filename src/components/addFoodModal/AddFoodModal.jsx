@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { logFoodData } from "../../services/airTableService";
+import { logFoodData } from "../../services/airTableServiceFoodLog";
 import { getFoodDataBySearchQueries } from "../../services/foodSearch";
-import { fetchFoodLog } from "../../services/airTableService";
+import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
 import FoodSearch from "./foodSearch/FoodSearch";
 import "./addFoodModal.css";
 
-const AddFoodModal = ({ toggleModal, getFoodLog}) => {
+const AddFoodModal = ({ toggleModal, getFoodLog }) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const getSearchResults = async (category) => {

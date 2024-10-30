@@ -15,11 +15,7 @@ const fetchFoodLog = async () => {
         //check if response is ok
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(
-                `Error ${response.status}: ${
-                    errorData.error.message || response.statusText
-                }`
-            );
+            throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
         }
 
         const data = await response.json();
@@ -39,7 +35,7 @@ const logFoodData = async (foodData) => {
             SugarsPerGram: foodData.productSugars,
             ProteinsPerGram: foodData.productProteins,
             FatsPerGram: foodData.productFats,
-            LoggedServingSize : Number(foodData.loggedServingSize)
+            LoggedServingSize: Number(foodData.loggedServingSize),
         },
     };
 
@@ -54,11 +50,7 @@ const logFoodData = async (foodData) => {
         });
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(
-                `Error ${response.status}: ${
-                    errorData.error.message || response.statusText
-                }`
-            );
+            throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
         }
         const result = await response.json();
         console.log("Record saved:", result);
@@ -79,20 +71,49 @@ const deleteFoodItem = async (recordId) => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(
-                `Error ${response.status}: ${
-                    errorData.error.message || response.statusText
-                }`
-            );
+            throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
         }
-        
+
         console.log("Record deleted successfully:", recordId);
     } catch (error) {
         console.log("Error deleting record:", error.message);
     }
 };
 
+const updateFoodItem = async (recordId, loggedServingSize) => {
+    const updateUrl = `${url}/${recordId}`; // Append recordId to the base URL
+
+    const data = {
+        fields: {
+            LoggedServingSize: Number(loggedServingSize), // Only update the LoggedServingSize field
+        },
+    };
+
+    try {
+        const response = await fetch(updateUrl, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log("Record updated successfully:", result);
+    } catch (error) {
+        console.log("Error updating record:", error.message);
+    }
+};
+
 // logFoodData(foodData);
 // fetchFoodLog();
 
-export { logFoodData, fetchFoodLog, deleteFoodItem };
+// updateFoodItem('rec8Shr1g0ucIXM0N', 1000);
+
+export { logFoodData, fetchFoodLog, deleteFoodItem, updateFoodItem };
