@@ -33,8 +33,8 @@ const WeeklyTracker = ({ dailyMacrosData = [] }) => {
     );
 
     return (
-        <div>
-            <h3>Last 7 Days' Macros</h3>
+        <div className="weekly-tracker">
+            <h1>Last 7 Days' Macros</h1>
             {renderLineChart}
         </div>
     );

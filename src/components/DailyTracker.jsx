@@ -46,8 +46,8 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Added an extra color
 
     return (
-        <div>
-            <h3>Today's Macros</h3>
+        <div className="daily-tracker">
+            <h1>Daily's Macros</h1>
             {currentDayMacros ? (
                 <>
                     <ResponsiveContainer width="100%" height={300}>
