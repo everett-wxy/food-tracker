@@ -34,6 +34,7 @@ const Dashboard = () => {
     useEffect(() => {
         getFoodLog();
         fetchDailyMacrosData();
+
     }, []);
 
     const toggleModal = () => {
@@ -46,7 +47,7 @@ const Dashboard = () => {
                 <DailyTracker dailyMacrosData={dailyMacros} />
                 <WeeklyTracker dailyMacrosData={dailyMacros}/>
             </div>
-            <FoodLog fetchedFoodLog={foodLog} toggleModal={toggleModal} getFoodLog={getFoodLog} />
+            <FoodLog fetchedFoodLog={foodLog} toggleModal={toggleModal} getFoodLog={getFoodLog} fetchDailyMacrosData={fetchDailyMacrosData}/>
 
             {modal && (
                 <div className="modal">

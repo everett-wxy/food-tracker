@@ -1,8 +1,9 @@
 const apiKey = import.meta.env.VITE_TOKEN; 
 
 const baseId = "appnXQbYNcFK7Qhia"; 
-const tableName = "Daily Macros"; 
-const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`; 
+const tableName = "DailyMacros"; 
+const parameters = "?sort[0][field]=Date&sort[0][direction]=asc"
+const url = `https://api.airtable.com/v0/${baseId}/${tableName}${parameters}`; 
 
 // Function to fetch daily macros
 const fetchDailyMacros = async () => {

@@ -2,11 +2,12 @@ const apiKey = import.meta.env.VITE_TOKEN;
 
 const baseId = "appnXQbYNcFK7Qhia"; // Replace with your Base ID
 const tableName = "tblpCLpnsIttydHsB"; // Replace with your table name
+const parameters = "?sort[0][field]=LinkedDate&sort[0][direction]=desc"
 const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
 const fetchFoodLog = async () => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(url+parameters, {
             headers: {
                 Authorization: "Bearer " + import.meta.env.VITE_TOKEN,
             },
@@ -35,6 +36,7 @@ const logFoodData = async (foodData) => {
             ProteinsPerGram: foodData.productProteins,
             FatsPerGram: foodData.productFats,
             LoggedServingSize: Number(foodData.loggedServingSize),
+            link
         },
     };
 

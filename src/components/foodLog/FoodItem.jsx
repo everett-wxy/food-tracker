@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { deleteFoodItem, updateFoodItem } from "../../services/airTableServiceFoodLog";
 import "./foodItem.css";
 
-const FoodItem = ({ food, getFoodLog }) => {
+const FoodItem = ({ food, getFoodLog, fetchDailyMacrosData }) => {
     const [servingSize, setServingSize] = useState(food.fields.LoggedServingSize);
     const [isEditing, setIsEditing] = useState(false); // State to toggle between edit and view modes
 
@@ -17,6 +17,7 @@ const FoodItem = ({ food, getFoodLog }) => {
             await updateFoodItem(foodId, servingSize); // Call your update function
             getFoodLog(); // Refresh the food log
             setIsEditing(false); // Exit edit mode
+            fetchDailyMacrosData();
         } catch (error) {
             console.log("Failed to update serving size:", error.message);
         }
@@ -26,6 +27,7 @@ const FoodItem = ({ food, getFoodLog }) => {
         try {
             await deleteFoodItem(foodId);
             getFoodLog();
+            fetchDailyMacrosData();
         } catch (error) {
             console.log("Failed to delete food item:", error.message);
         }
@@ -35,6 +37,7 @@ const FoodItem = ({ food, getFoodLog }) => {
         <div className="food-item-container" key={food.id}>
             <p>{food.fields.FoodName}</p>
             <p>Kcal: {Math.round(food.fields.TotalKcal)}</p>
+            <p>Date: {food.fields.LinkedDate}</p>
             <div className="serving-size-container">
                 {isEditing ? (
                     <input

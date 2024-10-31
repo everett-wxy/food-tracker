@@ -1,28 +1,24 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, PieChart, Pie, Tooltip, Cell, Label } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 
-const WeeklyTracker = ({dailyMacros}) => {
-    const data = [
-        { name: "Jan", sales: 4000 },
-        { name: "Feb", sales: 3000 },
-        { name: "Mar", sales: 5000 },
-        { name: "Apr", sales: 7000 },
-        { name: "May", sales: 2000 },
-        { name: "Jun", sales: 3000 },
-        { name: "Jul", sales: 5000 },
-        { name: "Aug", sales: 6000 },
-        { name: "Sep", sales: 7000 },
-        { name: "Oct", sales: 4000 },
-        { name: "Nov", sales: 5000 },
-        { name: "Dec", sales: 8000 },
-    ];
+const WeeklyTracker = ({ dailyMacrosData = [] }) => {
+
+
+    const lineChartData = dailyMacrosData
+        .map((item) => ({
+            date: item.fields.Date, // Use the date for the X-axis
+            totalCalories: item.fields.TotalKcal,
+        }))
+        .slice(-7); // Get only the last 7 days
+
+
 
     const renderLineChart = (
-        <LineChart width={600} height={400} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <Line type="monotone" dataKey="sales" stroke="#8884d8" />
+        <LineChart width={600} height={400} data={lineChartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <Line type="monotone" dataKey="totalCalories" stroke="#8884d8" />
             <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
-            <YAxis dataKey="sales" />
+            <XAxis dataKey="date" />
+            <YAxis />
         </LineChart>
     );
 
