@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteFoodItem, updateFoodItem } from "../../../services/airTableServiceFoodLog";
+import { deleteFoodItem, updateFoodItem } from "../../services/airTableServiceFoodLog";
 import "./foodItem.css";
 
 const FoodItem = ({ food, getFoodLog }) => {

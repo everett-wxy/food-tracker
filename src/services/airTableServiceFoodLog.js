@@ -19,7 +19,6 @@ const fetchFoodLog = async () => {
         }
 
         const data = await response.json();
-        console.log("Fetched records test:", data.records);
         return data.records;
     } catch (error) {
         console.log("Error fetching records:", error.message);
@@ -53,7 +52,6 @@ const logFoodData = async (foodData) => {
             throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
         }
         const result = await response.json();
-        console.log("Record saved:", result);
     } catch (error) {
         console.log("Error saving record", error);
     }
@@ -73,8 +71,6 @@ const deleteFoodItem = async (recordId) => {
             const errorData = await response.json();
             throw new Error(`Error ${response.status}: ${errorData.error.message || response.statusText}`);
         }
-
-        console.log("Record deleted successfully:", recordId);
     } catch (error) {
         console.log("Error deleting record:", error.message);
     }
@@ -105,7 +101,6 @@ const updateFoodItem = async (recordId, loggedServingSize) => {
         }
 
         const result = await response.json();
-        console.log("Record updated successfully:", result);
     } catch (error) {
         console.log("Error updating record:", error.message);
     }
@@ -113,7 +108,6 @@ const updateFoodItem = async (recordId, loggedServingSize) => {
 
 // logFoodData(foodData);
 // fetchFoodLog();
-
 // updateFoodItem('rec8Shr1g0ucIXM0N', 1000);
 
 export { logFoodData, fetchFoodLog, deleteFoodItem, updateFoodItem };

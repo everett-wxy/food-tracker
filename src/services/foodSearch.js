@@ -19,11 +19,13 @@ const getFoodDataBySearchQueries = async (searchQueryCategoriesValue) => {
             );
         }
         const data = await res.json();
-        console.log("getFoodDataBySearchQueries:", data);
+        // console.log("getFoodDataBySearchQueries:", data);
         return data;
     } catch (err) {
         console.log("error:", err);
     }
 };
+
+// getFoodDataBySearchQueries('chocolate')
 
 export { getFoodDataBySearchQueries };

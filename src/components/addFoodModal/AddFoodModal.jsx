@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { logFoodData } from "../../services/airTableServiceFoodLog";
 import { getFoodDataBySearchQueries } from "../../services/foodSearch";
 import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
-import FoodSearch from "./foodSearch/FoodSearch";
+import FoodSearch from "./FoodSearch";
 import "./addFoodModal.css";
 
 const AddFoodModal = ({ toggleModal, getFoodLog }) => {
@@ -12,7 +12,6 @@ const AddFoodModal = ({ toggleModal, getFoodLog }) => {
         try {
             const data = await getFoodDataBySearchQueries(category);
             const newSearchResults = data.products;
-            console.log("This is the search results:", newSearchResults);
             setSearchResults(newSearchResults);
         } catch (error) {
             console.log("Error:", error.message);
@@ -50,13 +49,9 @@ const AddFoodModal = ({ toggleModal, getFoodLog }) => {
 
     const handleClick = (searchResult) => {
         setSelectedResults(searchResult);
-        console.log("this is the selected food product", selectedResult);
         updateNutritionalValueBasedOnServing(servingSize);
     };
 
-    console.log("Selected Result Adjusted Servings:", selectedResultAdjustedServings);
-    console.log("Serving Size:", servingSize);
-    console.log("Selected Result:", selectedResult);
 
     const handleServingSizeInput = (e) => {
         const newServingSize = e.target.value;
@@ -74,7 +69,6 @@ const AddFoodModal = ({ toggleModal, getFoodLog }) => {
             productFats: (selectedResult.productFats * servingSize).toFixed(2),
         };
         setSelectedResultAdjustedServings(newNutritionalValue);
-        console.log("updated nutritional value based on serving size:", newNutritionalValue);
     };
 
     const handleAddFood = async () => {

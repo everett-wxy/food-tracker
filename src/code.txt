@@ -1,9 +1,0 @@
-   const restructuredSearchResultsData = searchResults.map((item) => ({
-        productName: item.product_name,
-        productKcal: item.nutriments.energy,
-        productCarbs: item.nutriments.carbohydrates,
-        productSugars: item.nutriments.sugars,
-        productProteins: item.nutriments.proteins,
-        productFats: item.nutriments.fat,
-        productImage: item.selected_images.front.small.en,
-    }));

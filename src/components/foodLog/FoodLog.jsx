@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
-import FoodItem from "./foodItem/FoodItem";
+import FoodItem from "./FoodItem";
+import './foodLog.css'
 
 const FoodLog = ({ toggleModal, fetchedFoodLog, getFoodLog }) => {
     const fooditems = fetchedFoodLog.map((food) => <FoodItem food={food} getFoodLog={getFoodLog} key={food.id} />);
