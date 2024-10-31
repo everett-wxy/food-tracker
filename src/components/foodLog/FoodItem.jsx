@@ -35,9 +35,9 @@ const FoodItem = ({ food, getFoodLog, fetchDailyMacrosData }) => {
 
     return (
         <div className="food-item-container" key={food.id}>
-            <p>{food.fields.FoodName}</p>
-            <p>Kcal: {Math.round(food.fields.TotalKcal)}</p>
-            <p>Date: {food.fields.LinkedDate}</p>
+            <p className="food-title">{food.fields.FoodName}</p>
+            <p className="kcal">Kcal: {Math.round(food.fields.TotalKcal)}</p>
+            <p className="date">Date: {food.fields.LinkedDate}</p>
             <div className="serving-size-container">
                 {isEditing ? (
                     <input
@@ -46,9 +46,10 @@ const FoodItem = ({ food, getFoodLog, fetchDailyMacrosData }) => {
                         onChange={(e) => setServingSize(e.target.value)}
                         min="0"
                         placeholder="Update Servings"
+                        className="serving-size-input"
                     />
                 ) : (
-                    <span onClick={() => setIsEditing(true)}>{`Servings: ${servingSize}`}</span>
+                    <span onClick={() => setIsEditing(true)}>{`Servings: ${servingSize} g`}</span>
                 )}
             </div>
             {isEditing && (

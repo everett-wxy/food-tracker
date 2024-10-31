@@ -8,15 +8,40 @@
 .serving-size-container span:hover {
     color: #0056b3; /* Darken the text color on hover */
 }
-.delete-btn{
-    margin-top: 20px;
-}
 
 h2{
     margin: 10px 0px;
 }
 
-.food-item-container{
-    padding: 10px; 
-    border: 1px solid black; 
-  }
+.food-item-container {
+    display: flex;
+    align-items: center; /* Centers items vertically */
+    padding: 10px; /* Add some padding for better spacing */
+    background-color: rgb(213, 228, 214);
+    border-radius: 10px;
+}
+
+.food-details {
+    flex: 1; /* Allow this section to grow */
+}
+
+.food-title{
+    font-weight: bold;
+    min-width: 300px;
+}
+
+.kcal{
+    min-width: 100px;
+}
+
+.date, .serving-size-container{
+    min-width: 150px; 
+}
+
+.delete-btn {
+    margin-left: auto; /* Pushes the button to the right */
+}
+
+.serving-size-input{
+    width: 100px;
+}
