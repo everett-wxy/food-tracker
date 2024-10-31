@@ -107,8 +107,5 @@ const updateFoodItem = async (recordId, loggedServingSize) => {
     }
 };
 
-// logFoodData(foodData);
-// fetchFoodLog();
-// updateFoodItem('rec8Shr1g0ucIXM0N', 1000);
 
 export { logFoodData, fetchFoodLog, deleteFoodItem, updateFoodItem };

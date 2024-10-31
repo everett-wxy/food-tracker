@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { logFoodData } from "../../services/airTableServiceFoodLog";
 import { getFoodDataBySearchQueries } from "../../services/foodSearch";
-import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
 import FoodSearch from "./FoodSearch";
 import "./addFoodModal.css";
 import Spinner from "../Spinner.JSX";

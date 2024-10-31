@@ -29,7 +29,6 @@ const getFoodDataBySearchQueries = async (searchQueryCategoriesValue, brandValue
             );
         }
         const data = await res.json();
-        // console.log("getFoodDataBySearchQueries:", data);
         return data;
     } catch (err) {
         console.log("error:", err);

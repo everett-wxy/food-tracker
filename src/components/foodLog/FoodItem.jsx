@@ -6,12 +6,6 @@ const FoodItem = ({ food, getFoodLog, fetchDailyMacrosData }) => {
     const [servingSize, setServingSize] = useState(food.fields.LoggedServingSize);
     const [isEditing, setIsEditing] = useState(false); // State to toggle between edit and view modes
 
-    // const cleanUpFoodData = {
-    //     ...food,
-    //     kcal: Math.round(food.fields.TotalKcal),
-    //     serving: food.fields.LoggedServingSize,
-    // };
-
     const handleUpdate = async (foodId) => {
         try {
             await updateFoodItem(foodId, servingSize); // Call your update function
