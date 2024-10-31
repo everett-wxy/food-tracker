@@ -4,17 +4,22 @@ import { getFoodDataBySearchQueries } from "../../services/foodSearch";
 import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
 import FoodSearch from "./FoodSearch";
 import "./addFoodModal.css";
+import Spinner from "../Spinner.JSX";
 
-const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
+const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros }) => {
+    const [loading, setLoading] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
 
-    const getSearchResults = async (category,brand) => {
+    const getSearchResults = async (category, brand) => {
+        setLoading(true);
         try {
-            const data = await getFoodDataBySearchQueries(category,brand);
+            const data = await getFoodDataBySearchQueries(category, brand);
             const newSearchResults = data.products;
             setSearchResults(newSearchResults);
         } catch (error) {
             console.log("Error:", error.message);
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -32,7 +37,11 @@ const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
 
     // map and display search results that is clickable
     const searchResultsPanel = restructuredSearchResultsData.map((searchResult) => (
-        <div className="result" onClick={() => handleClick(searchResult)} key={searchResult.productCode}>
+        <div
+            className="result"
+            onClick={() => handleClick(searchResult)}
+            key={searchResult.productCode}
+        >
             {searchResult.productName}
         </div>
     ));
@@ -51,7 +60,6 @@ const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
         setSelectedResults(searchResult);
         updateNutritionalValueBasedOnServing(servingSize);
     };
-
 
     const handleServingSizeInput = (e) => {
         const newServingSize = e.target.value;
@@ -72,35 +80,42 @@ const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
     };
 
     const handleAddFood = async () => {
-        if (!Object.keys(selectedResult).length || !servingSize || !Object.keys(selectedResultAdjustedServings).length)
+        if (
+            !Object.keys(selectedResult).length ||
+            !servingSize ||
+            !Object.keys(selectedResultAdjustedServings).length
+        )
             return;
+        setLoading(true); // Start loading
         const selectedResultWithServingSize = {
             ...selectedResult,
             loggedServingSize: servingSize,
         };
         try {
             await logFoodData(selectedResultWithServingSize);
-            toggleModal();
 
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
 
             await getFoodLog();
             await fetchDailyMacros();
+            toggleModal();
         } catch (error) {
             console.log("error logging data", error.message);
+        } finally {
+            
+            setLoading(false);
         }
     };
 
     return (
         <>
             <FoodSearch getSearchResults={getSearchResults} />
-
             <h2>Search Results</h2>
-
             <div className="results-panel">{searchResultsPanel}</div>
-
             <div className="food-details">
-                {selectedResult.productImage && <img src={selectedResult.productImage} alt="Product Image" />}
+                {selectedResult.productImage && (
+                    <img src={selectedResult.productImage} alt="Product Image" />
+                )}
                 <p>{selectedResult.productName}</p>
                 <p>
                     Kcal:{" "}
@@ -153,6 +168,7 @@ const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
                 <br />
                 <button onClick={handleAddFood}>Add Food</button>
             </div>
+            {loading && <Spinner />}
         </>
     );
 };

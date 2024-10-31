@@ -19,6 +19,7 @@ h2{
     padding: 10px; /* Add some padding for better spacing */
     background-color: rgb(213, 228, 214);
     border-radius: 10px;
+    justify-content: space-evenly;
 }
 
 .food-details {
@@ -27,7 +28,8 @@ h2{
 
 .food-title{
     font-weight: bold;
-    min-width: 300px;
+    width: 200px;
+    min-width: 200px;
 }
 
 .kcal{

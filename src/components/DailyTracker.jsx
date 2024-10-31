@@ -40,7 +40,7 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
         : [];
 
     const pieChartDataKcal = currentDayMacros
-        ? [{ name: "Kcal", value: currentDayMacros.TotalKcal }]
+        ? [{ name: "Kcal", value: Math.round(currentDayMacros.TotalKcal) }]
         : [];
 
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Added an extra color
@@ -58,8 +58,8 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
                                 dataKey="value"
                                 nameKey="name"
                                 cy="50%"
-                                outerRadius={100} // Adjusted for outer radius
-                                innerRadius={90} // Added inner radius for hollow effect
+                                outerRadius={130} // Adjusted for outer radius
+                                innerRadius={120} // Added inner radius for hollow effect
                                 fill="#8884d8"
                                 label={({ name, value }) => `${name}: ${value}kcal`}
                             >
@@ -74,8 +74,8 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
                                 dataKey="value"
                                 nameKey="name"
                                 cy="50%"
-                                innerRadius={50} // Inner radius for donut effect
-                                outerRadius={80}
+                                innerRadius={80} // Inner radius for donut effect
+                                outerRadius={110}
                                 fill="#8884d8"
                                 label={({ name, value }) => `${name}: ${value}%`}
                             >

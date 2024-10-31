@@ -5,7 +5,7 @@ nav {
     justify-content: flex-start;
     align-items: center;
     border-bottom: 1px solid black;
-    height: 50px; /* Set a fixed height for nav */
+    height: 80px; /* Set a fixed height for nav */
     box-sizing: border-box; /* Include padding and border in height */
   }
 
