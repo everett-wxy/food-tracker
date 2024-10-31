@@ -5,6 +5,8 @@ import { fetchFoodLog } from "../services/airTableServiceFoodLog";
 import { fetchDailyMacros } from "../services/airTableServiceDailyMacros";
 import DailyTracker from "./DailyTracker";
 import WeeklyTracker from "./WeeklyTracker.jsx";
+import NavBar from "./navBar/NavBar.jsx";
+import { Route, Routes } from "react-router-dom";
 
 const Dashboard = () => {
     const [modal, setModal] = useState(false);
@@ -34,7 +36,6 @@ const Dashboard = () => {
     useEffect(() => {
         getFoodLog();
         fetchDailyMacrosData();
-
     }, []);
 
     const toggleModal = () => {
@@ -42,24 +43,42 @@ const Dashboard = () => {
     };
 
     return (
-        <main>
-            <div className="left-panel">
-                <DailyTracker dailyMacrosData={dailyMacros} />
-                <WeeklyTracker dailyMacrosData={dailyMacros}/>
-            </div>
-            <FoodLog fetchedFoodLog={foodLog} toggleModal={toggleModal} getFoodLog={getFoodLog} fetchDailyMacrosData={fetchDailyMacrosData}/>
+        <>
+            <NavBar />
+            <main>
+                <div className="left-panel">
+                    {/* <Routes>
+                        <Route
+                            path="/test"
+                            element={<DailyTracker dailyMacrosData={dailyMacros} />}
+                        />
+                        <Route
+                            path="/test2"
+                            element={<WeeklyTracker dailyMacrosData={dailyMacros} />}
+                        />
+                    </Routes> */}
+                    <DailyTracker dailyMacrosData={dailyMacros} />
+                    <WeeklyTracker dailyMacrosData={dailyMacros} />
+                </div>
+                <FoodLog
+                    fetchedFoodLog={foodLog}
+                    toggleModal={toggleModal}
+                    getFoodLog={getFoodLog}
+                    fetchDailyMacrosData={fetchDailyMacrosData}
+                />
 
-            {modal && (
-                <div className="modal">
-                    <div onClick={toggleModal} className="overlay"></div>
-                    <div className="modal-content">
-                        <div>
-                            <AddFoodModal toggleModal={toggleModal} getFoodLog={getFoodLog} />
+                {modal && (
+                    <div className="modal">
+                        <div onClick={toggleModal} className="overlay"></div>
+                        <div className="modal-content">
+                            <div>
+                                <AddFoodModal toggleModal={toggleModal} getFoodLog={getFoodLog} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </main>
+                )}
+            </main>
+        </>
     );
 };
 
