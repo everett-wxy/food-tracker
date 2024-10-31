@@ -8,9 +8,9 @@ import "./addFoodModal.css";
 const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
     const [searchResults, setSearchResults] = useState([]);
 
-    const getSearchResults = async (category) => {
+    const getSearchResults = async (category,brand) => {
         try {
-            const data = await getFoodDataBySearchQueries(category);
+            const data = await getFoodDataBySearchQueries(category,brand);
             const newSearchResults = data.products;
             setSearchResults(newSearchResults);
         } catch (error) {
@@ -79,9 +79,11 @@ const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
             loggedServingSize: servingSize,
         };
         try {
-            console.log("Food data before loggin - searchResult", selectedResultWithServingSize);
             await logFoodData(selectedResultWithServingSize);
             toggleModal();
+
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+
             await getFoodLog();
             await fetchDailyMacros();
         } catch (error) {

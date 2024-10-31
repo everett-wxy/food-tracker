@@ -77,3 +77,8 @@ button:hover {
 p{
     margin: 0px;
 }
+
+.search-food-btn{
+    display: block;
+    margin-top: 10px;
+}

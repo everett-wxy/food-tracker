@@ -30,7 +30,6 @@ const Dashboard = () => {
         try {
             const data = await fetchDailyMacros();
             setDailyMacros(data);
-            console.log('Fetching Daily Macros Data', data);
         } catch (error) {
             console.log(error.message);
         }

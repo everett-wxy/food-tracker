@@ -6,12 +6,9 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
 
     useEffect(() => {
         const todaysMacros = dailyMacrosData.find((item) => item.fields.Date === date);
-        console.log("Today's Macros:", todaysMacros); // Debug output
-        console.log("date", date);
 
         if (todaysMacros) {
             setCurrentDayMacros(todaysMacros.fields);
-            console.log("Updated currentDayMacros:", todaysMacros.fields); // Debug output
         } else {
             setCurrentDayMacros(null);
         }
@@ -61,8 +58,8 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
                                 dataKey="value"
                                 nameKey="name"
                                 cy="50%"
-                                outerRadius={110} // Adjusted for outer radius
-                                innerRadius={95} // Added inner radius for hollow effect
+                                outerRadius={100} // Adjusted for outer radius
+                                innerRadius={90} // Added inner radius for hollow effect
                                 fill="#8884d8"
                                 label={({ name, value }) => `${name}: ${value}kcal`}
                             >
@@ -77,8 +74,8 @@ const DailyTracker = ({ dailyMacrosData, date }) => {
                                 dataKey="value"
                                 nameKey="name"
                                 cy="50%"
-                                innerRadius={60} // Inner radius for donut effect
-                                outerRadius={90}
+                                innerRadius={50} // Inner radius for donut effect
+                                outerRadius={80}
                                 fill="#8884d8"
                                 label={({ name, value }) => `${name}: ${value}%`}
                             >
