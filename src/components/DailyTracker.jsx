@@ -1,66 +1,106 @@
 import React, { useEffect, useState } from "react";
-import { Pie, PieChart, Tooltip, Cell } from "recharts";
+import { Pie, PieChart, Tooltip, Cell, ResponsiveContainer } from "recharts";
 
-const DailyTracker = ({ dailyMacrosData }) => {
+const DailyTracker = ({ dailyMacrosData, date }) => {
     const [currentDayMacros, setCurrentDayMacros] = useState(null);
 
-    const getCurrentDateInSingapore = () => {
-        return new Intl.DateTimeFormat("en-CA", {
-            timeZone: "Asia/Singapore",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-        }).format(new Date());
-    };
-
     useEffect(() => {
-        const today = getCurrentDateInSingapore();
-        const todaysMacros = dailyMacrosData.find((item) => item.fields.Date === today);
+        const todaysMacros = dailyMacrosData.find((item) => item.fields.Date === date);
+        console.log("Today's Macros:", todaysMacros); // Debug output
+        console.log("date", date);
 
         if (todaysMacros) {
             setCurrentDayMacros(todaysMacros.fields);
+            console.log("Updated currentDayMacros:", todaysMacros.fields); // Debug output
         } else {
             setCurrentDayMacros(null);
         }
-    }, [dailyMacrosData]); // Runs every time dailyMacrosData changes
-
+    }, [dailyMacrosData, date]);
 
     const pieChartData = currentDayMacros
-        ? [
-              { name: "Carbs", value: currentDayMacros.TotalCarbs * 4 },
-              { name: "Fats", value: currentDayMacros.TotalFats * 9 },
-              { name: "Protein", value: currentDayMacros.TotalProteins * 4 },
-          ]
+        ? (() => {
+              const totalCalories =
+                  currentDayMacros.TotalCarbs * 4 +
+                  currentDayMacros.TotalFats * 9 +
+                  currentDayMacros.TotalProteins * 4;
+              return [
+                  {
+                      name: "Carbs",
+                      value: Math.round(((currentDayMacros.TotalCarbs * 4) / totalCalories) * 100),
+                  },
+                  {
+                      name: "Fats",
+                      value: Math.round(((currentDayMacros.TotalFats * 9) / totalCalories) * 100),
+                  },
+                  {
+                      name: "Protein",
+                      value: Math.round(
+                          ((currentDayMacros.TotalProteins * 4) / totalCalories) * 100
+                      ),
+                  },
+              ];
+          })()
         : [];
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+    const pieChartDataKcal = currentDayMacros
+        ? [{ name: "Kcal", value: currentDayMacros.TotalKcal }]
+        : [];
 
-    const renderPieChart = (
-        <PieChart width={350} height={250}>
-            <Pie
-                data={pieChartData}
-                dataKey="value"
-                nameKey="name"
-                cy="50%"
-                xy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-            >
-                {pieChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-            </Pie>
-            <Tooltip />
-        </PieChart>
-    );
+    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Added an extra color
 
     return (
         <div>
             <h3>Today's Macros</h3>
             {currentDayMacros ? (
                 <>
-                {renderPieChart}
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            {/* Outer Circle: Total Kcal */}
+                            <Pie
+                                data={pieChartDataKcal}
+                                dataKey="value"
+                                nameKey="name"
+                                cy="50%"
+                                outerRadius={110} // Adjusted for outer radius
+                                innerRadius={95} // Added inner radius for hollow effect
+                                fill="#8884d8"
+                                label={({ name, value }) => `${name}: ${value}kcal`}
+                            >
+                                {pieChartDataKcal.map((entry, index) => (
+                                    <Cell key={`cell-kcal-${index}`} fill={COLORS[3]} />
+                                ))}
+                            </Pie>
+
+                            {/* Inner Circle: Macros Breakdown */}
+                            <Pie
+                                data={pieChartData}
+                                dataKey="value"
+                                nameKey="name"
+                                cy="50%"
+                                innerRadius={60} // Inner radius for donut effect
+                                outerRadius={90}
+                                fill="#8884d8"
+                                label={({ name, value }) => `${name}: ${value}%`}
+                            >
+                                {pieChartData.map((entry, index) => (
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Pie>
+
+                            {/* Tooltip with different formatting for Kcal and macros */}
+                            <Tooltip
+                                formatter={(value, name) => {
+                                    if (name === "Kcal") {
+                                        return [`${Math.round(value)} Calories`, name];
+                                    }
+                                    return [`${Math.round(value)}%`, name];
+                                }}
+                            />
+                        </PieChart>
+                    </ResponsiveContainer>
                 </>
             ) : (
                 <p>No macro data available for today.</p>

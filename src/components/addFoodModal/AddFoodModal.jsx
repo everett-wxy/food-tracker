@@ -5,7 +5,7 @@ import { fetchFoodLog } from "../../services/airTableServiceFoodLog";
 import FoodSearch from "./FoodSearch";
 import "./addFoodModal.css";
 
-const AddFoodModal = ({ toggleModal, getFoodLog }) => {
+const AddFoodModal = ({ toggleModal, getFoodLog, fetchDailyMacros}) => {
     const [searchResults, setSearchResults] = useState([]);
 
     const getSearchResults = async (category) => {
@@ -82,7 +82,8 @@ const AddFoodModal = ({ toggleModal, getFoodLog }) => {
             console.log("Food data before loggin - searchResult", selectedResultWithServingSize);
             await logFoodData(selectedResultWithServingSize);
             toggleModal();
-            getFoodLog();
+            await getFoodLog();
+            await fetchDailyMacros();
         } catch (error) {
             console.log("error logging data", error.message);
         }

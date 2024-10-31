@@ -6,9 +6,8 @@ const NavBar = () => {
     return (
         <nav>
             <ul>
-                <li><Link to='/test'>Next Day</Link></li>
-                <li>Today's Date</li>
-                <li><Link to='/test2'>Previous Day</Link></li>
+                <li><Link to='/day-view'>Day View</Link></li>
+                <li><Link to='/weekly-view'>Week View</Link></li>
             </ul>
         </nav>
     );

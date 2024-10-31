@@ -36,7 +36,6 @@ const logFoodData = async (foodData) => {
             ProteinsPerGram: foodData.productProteins,
             FatsPerGram: foodData.productFats,
             LoggedServingSize: Number(foodData.loggedServingSize),
-            link
         },
     };
 

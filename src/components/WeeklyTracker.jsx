@@ -1,5 +1,5 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 
 const WeeklyTracker = ({ dailyMacrosData = [] }) => {
 
@@ -19,6 +19,7 @@ const WeeklyTracker = ({ dailyMacrosData = [] }) => {
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="date" />
             <YAxis />
+            <Tooltip formatter={(value) => `${Math.ceil(value)} Calories`} />
         </LineChart>
     );
 
@@ -31,3 +32,4 @@ const WeeklyTracker = ({ dailyMacrosData = [] }) => {
 };
 
 export default WeeklyTracker;
+

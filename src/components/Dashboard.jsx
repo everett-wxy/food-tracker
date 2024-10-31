@@ -15,6 +15,8 @@ const Dashboard = () => {
 
     const [dailyMacros, setDailyMacros] = useState([]);
 
+    const [date,setDate] = useState('');
+
     const getFoodLog = async () => {
         try {
             const data = await fetchFoodLog();
@@ -28,14 +30,25 @@ const Dashboard = () => {
         try {
             const data = await fetchDailyMacros();
             setDailyMacros(data);
+            console.log('Fetching Daily Macros Data', data);
         } catch (error) {
             console.log(error.message);
         }
     };
 
+    const getCurrentDateInSingapore = () => {
+        return new Intl.DateTimeFormat("en-CA", {
+            timeZone: "Asia/Singapore",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).format(new Date());
+    };
+
     useEffect(() => {
         getFoodLog();
         fetchDailyMacrosData();
+        setDate(getCurrentDateInSingapore())
     }, []);
 
     const toggleModal = () => {
@@ -47,19 +60,18 @@ const Dashboard = () => {
             <NavBar />
             <main>
                 <div className="left-panel">
-                    {/* <Routes>
+                    <Routes>
                         <Route
-                            path="/test"
-                            element={<DailyTracker dailyMacrosData={dailyMacros} />}
+                            path="/day-view"
+                            element={<DailyTracker dailyMacrosData={dailyMacros} date={date} />}
                         />
                         <Route
-                            path="/test2"
+                            path="/weekly-view"
                             element={<WeeklyTracker dailyMacrosData={dailyMacros} />}
                         />
-                    </Routes> */}
-                    <DailyTracker dailyMacrosData={dailyMacros} />
-                    <WeeklyTracker dailyMacrosData={dailyMacros} />
+                    </Routes>
                 </div>
+                <div className="food-log-container">
                 <FoodLog
                     fetchedFoodLog={foodLog}
                     toggleModal={toggleModal}
@@ -72,11 +84,12 @@ const Dashboard = () => {
                         <div onClick={toggleModal} className="overlay"></div>
                         <div className="modal-content">
                             <div>
-                                <AddFoodModal toggleModal={toggleModal} getFoodLog={getFoodLog} />
+                                <AddFoodModal toggleModal={toggleModal} getFoodLog={getFoodLog} fetchDailyMacros={fetchDailyMacrosData}/>
                             </div>
                         </div>
                     </div>
                 )}
+                </div>
             </main>
         </>
     );

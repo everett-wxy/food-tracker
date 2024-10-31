@@ -2,10 +2,12 @@ nav {
     background-color: #f0f0f0;
     padding: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: 1px solid black;
-}
+    height: 50px; /* Set a fixed height for nav */
+    box-sizing: border-box; /* Include padding and border in height */
+  }
 
 nav ul {
     list-style: none;
@@ -15,14 +17,10 @@ nav ul {
     margin: 0;
 }
 
-nav ul li {
-    margin: 0;
-}
-
-nav ul li, nav ul li {
+nav ul li a {
     text-decoration: none;
-    background-color: #4CAF50; /* Button color */
     color: white;
+    background-color: #4CAF50; /* Button color */
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -32,6 +30,6 @@ nav ul li, nav ul li {
     transition: background-color 0.3s;
 }
 
-nav ul li a:hover, nav ul li:hover {
+nav ul li a:hover {
     background-color: #45a049; /* Hover color */
 }
