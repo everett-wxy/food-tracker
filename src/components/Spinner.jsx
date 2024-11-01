@@ -19,7 +19,7 @@ const Spinner = () => {
 
     return (
         <div className="spinner-container">
-            <img src={randomSpinnerLink} alt="Loading..." class="spinner" />
+            <img src={randomSpinnerLink} alt="Loading..." className="spinner" />
         </div>
     );
 };
